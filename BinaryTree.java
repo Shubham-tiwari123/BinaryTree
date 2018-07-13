@@ -13,10 +13,12 @@ class Node{
 
 class BinaryTree{
     Scanner sc = new Scanner(System.in);
-    Node root,newnode,temp,temp1;
+    Node root,newnode,temp,temp1,arrayRoot;
+    int[] A = new int[10];
     
     public BinaryTree() {
         root=null;
+        arrayRoot=null;
     }
     
     public void createBT(int value){
@@ -97,6 +99,7 @@ class BinaryTree{
 
         }
     }
+    
     public void inorder(Node node){
         if(node==null)
             return;
@@ -105,6 +108,35 @@ class BinaryTree{
         inorder(node.right);
     }
     
+    public void preOrder(Node node){
+        if(node==null)
+            return;
+        System.out.print(node.data+" ");
+        preOrder(node.left);
+        preOrder(node.right);
+    }
+    
+    public void postOrder(Node node){
+        if(node==null)
+            return;
+        postOrder(node.left);
+        postOrder(node.right);
+        System.out.print(node.data+" ");
+    }
+    
+    public void levelOrderTraversal(){
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(root);
+        System.out.print("\n");
+        while(!queue.isEmpty()){
+            temp = queue.poll();
+            if(temp.left!=null)
+                queue.add(temp.left);
+            if(temp.right!=null)
+                queue.add(temp.right);
+            System.out.print(temp.data+" ");
+        }
+    }
     public void deleteNode(int value){
         Node key_node=null;
         temp=null;
@@ -159,6 +191,38 @@ class BinaryTree{
     
     Node getRoot(){
         return root;
+    }
+    
+    public void initializeArray(){
+        for(int i=0;i<10;i++){
+            A[i]=-1;
+        }
+    }
+    public void arrayRepresentation(int key,int root){
+        
+        char choice;
+        if(A[0]==-1){
+            A[0]=key;
+        }
+        else{
+            System.out.print("\nEnter(L/R):-");
+            choice = sc.next().charAt(0);
+            if(choice=='L'){
+                int possition = (root*2)+1;
+                A[possition]=key;
+            }
+            if(choice=='R'){
+                int possition = (root*2)+2;
+                A[possition]=key;
+            }
+        }
+    }
+    
+    public void displayArray(){
+        for (int i = 0; i < 10; i++) {
+            if (A[i] != -1)
+                System.out.print(A[i]);
+        }
     }
 }
 
