@@ -10,10 +10,16 @@ public class BinaryTreeOperation {
     
     public void start(){
         int choice=0;
+        int choice2=0;
+        int value=0;
+        int level=0;
+        boolean input=false;
         BinaryTree bt = new BinaryTree();
         
         do{
-            System.out.print("\n1)Add node\n2)Display\n3)Delete node\n4)Exit\n");
+            System.out.print("\n1)Add node\n2)BFS/Level order traversal\n"
+                    + "3)DFS(Depth First Traversals)\n4)Delete node\n"
+                    + "5)Array implementation\n6)Exit\n");
             System.out.print("Enter your choice:-");
             try{
                 choice = sc.nextInt();
@@ -27,20 +33,65 @@ public class BinaryTreeOperation {
                        int num=sc.nextInt();
                        for(int i=0;i<num;i++){
                            System.out.print("\nValue:-");
-                           int value = sc.nextInt();
+                           value = sc.nextInt();
                            bt.createBT(value);
                        }
                        break;
                 case 2:
-                        Node node=bt.getRoot();
-                        bt.inorder(node);
+                       bt.levelOrderTraversal();
+                       
+                case 3: Node node=bt.getRoot();
+                        System.out.print("\n1)InOrder\t2)PostOrder\t3)PreOrder\n"
+                                + "Enter your choice:-");
+                        while(!input){
+                            try{
+                                choice2 = sc.nextInt();
+                                input=true;
+                            }catch(InputMismatchException i){
+                                System.out.print("\nWrong input...enter again");
+                                sc.nextLine();
+                            }
+                        }
+                        switch(choice2){
+                            case 1: System.out.print("\nInoder...\n");
+                                    bt.inorder(node);
+                                    break;
+                            case 2: System.out.print("\nPostorder...\n");
+                                    bt.postOrder(node);
+                                    break;
+                            case 3:System.out.print("\nPreorder...\n");
+                                    bt.preOrder(node);
+                                    break;
+                        }
                         break;
-                case 3:
+                        
+                case 4:
                         System.out.print("\nEnter the data to delete:-");
-                        int value=sc.nextInt();
+                        value=sc.nextInt();
                         bt.deleteNode(value);
+                        break;
+                case 5:bt.initializeArray();
+                       System.out.print("\nArray implementation...");
+                       System.out.print("\nNumber of nodes:-");
+                       num=sc.nextInt();
+                       for(int i=0;i<num;i++){
+                           if(i==0){
+                               System.out.print("Value:-");
+                               value = sc.nextInt();
+                           }
+                           else{
+                               System.out.print("Value:-");
+                               value = sc.nextInt();
+                               System.out.print("level:-");
+                               level=sc.nextInt();
+                           }
+                           bt.arrayRepresentation(value,level);
+                       }
+                       bt.displayArray();
+                       break;
+                            
             }
-        }while(choice!=4);
+        }while(choice!=6);
     }
    
     public static void main(String[] args) {
