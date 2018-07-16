@@ -354,5 +354,48 @@ class BinaryTree{
     AvlNode getAvlRoot(){
         return avlRoot;
     }
+    
+    public void continuousTree(Node nodeData){
+        if(nodeData==null)
+            return;
+        Node temp2=null;
+        int flag=0;
+        Queue<Node>queue=new LinkedList<>();
+        Queue<Node>queue1=new LinkedList<>();
+        queue.add(nodeData);
+        while(!queue.isEmpty()){
+            temp = queue.poll();
+            if(temp.left!=null)
+                queue1.add(temp.left);
+            if(temp.right!=null)
+                queue1.add(temp.right);
+            
+            temp1=queue1.poll();
+            if(temp1!=null){
+                if(temp1.data-temp.data==1||temp1.data-temp.data==-1){
+                    temp2=queue1.poll();
+                    if(temp2!=null){
+                        if(temp2.data-temp.data==1||temp2.data-temp.data==-1){
+                            queue.add(temp1);
+                            queue.add(temp2);
+                            flag=1;
+                        }
+                        else{
+                            System.out.println("\nNot a continues tree");
+                            flag=0;
+                            break;
+                        }
+                    }
+                }
+                else{
+                    flag=0;
+                    System.out.println("\nNot a continues tree");
+                    break;
+                }
+            }
+        }
+        if(flag==1)
+            System.out.print("\nContinuous Tree");
+    }
 }
 
