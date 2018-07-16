@@ -11,14 +11,22 @@ class Node{
     Node right;
 }
 
+class AvlNode{
+    int data;
+    int number;
+    AvlNode left;
+    AvlNode right;
+}
+
 class BinaryTree{
     Scanner sc = new Scanner(System.in);
-    Node root,newnode,temp,temp1,arrayRoot;
+    Node root,newnode,temp,temp1;
     int[] A = new int[10];
+    AvlNode avlRoot,avlNewNode,tempVar,tempVar1;
     
     public BinaryTree() {
         root=null;
-        arrayRoot=null;
+        avlRoot=null;
     }
     
     public void createBT(int value){
@@ -130,6 +138,7 @@ class BinaryTree{
         System.out.print("\n");
         while(!queue.isEmpty()){
             temp = queue.poll();
+            
             if(temp.left!=null)
                 queue.add(temp.left);
             if(temp.right!=null)
@@ -223,6 +232,127 @@ class BinaryTree{
             if (A[i] != -1)
                 System.out.print(A[i]);
         }
+    }
+    
+    public void treeDuplicateValue(int value){
+        boolean flag=false;
+        char side;
+        int flag1=0,flag2=0;
+        if(avlRoot==null){
+            avlNewNode = new AvlNode();
+            avlNewNode.data=value;
+            avlNewNode.number=1;
+            avlNewNode.left=null;
+            avlNewNode.right=null;
+            
+            avlRoot=avlNewNode;
+        }
+        else{
+            flag=checkData(value);
+            if(flag)
+                return;
+            else{
+                tempVar = avlRoot;
+                avlNewNode=new AvlNode();
+                avlNewNode.data=value;
+                avlNewNode.number=1;
+                avlNewNode.left=null;
+                avlNewNode.right=null;
+                
+                System.out.print("\nWhere to enter(L/R):-");
+                side=sc.next().charAt(0);
+                if(side=='L'){
+                    if(tempVar.left==null){
+                        tempVar.left = avlNewNode;
+                        tempVar=null;
+                    }
+                    else{
+                        tempVar=tempVar.left;
+                    }
+                    while(tempVar!=null){
+                        System.out.print("\nWhere to enter(L/R):-");
+                        side=sc.next().charAt(0);
+                        if(side=='L'){
+                            tempVar1 = tempVar;
+                            tempVar=tempVar.left;
+                            flag1=1;
+                            flag2=0;
+                        }
+                        else{
+                            tempVar1=tempVar;
+                            tempVar=tempVar.right;
+                            flag1=0;
+                            flag2=1;
+                        }
+                    }
+                    if(flag1==1)
+                        tempVar1.left=avlNewNode;
+                    else if(flag2==1)
+                        tempVar1.right=avlNewNode;
+                }
+                else{
+                    if(avlRoot.right==null){
+                        avlRoot.right = avlNewNode;
+                        tempVar = null;
+                    }
+                    else{
+                        tempVar=tempVar.right;
+                    }
+                    while(tempVar!=null){
+                        System.out.print("\nWhere to enter(L/R):-");
+                        side=sc.next().charAt(0);
+                        if(side=='L'){
+                            tempVar1 = tempVar;
+                            tempVar=tempVar.left;
+                            flag1=1;
+                            flag2=0;
+                        }
+                        else{
+                            tempVar1=tempVar;
+                            tempVar=tempVar.right;
+                            flag1=0;
+                            flag2=1;
+                        }
+                    }
+                    if(flag1==1)
+                        tempVar1.left=avlNewNode;
+                    else if(flag2==1)
+                        tempVar1.right=avlNewNode;
+                }
+
+            }
+        }
+    }
+    
+    public boolean checkData(int value){
+        tempVar = avlRoot;
+        Queue<AvlNode>queue= new LinkedList<>();
+        queue.add(avlRoot);
+        while(!queue.isEmpty()){
+            tempVar=queue.poll();
+            if(tempVar.data==value){
+                int i=tempVar.number;
+                tempVar.number=i+1;
+                return Boolean.TRUE;
+            }
+            if(tempVar.left!=null)
+                queue.add(tempVar.left);
+            if(tempVar.right!=null)
+                queue.add(tempVar.right);
+        }
+        return Boolean.FALSE;
+    }
+    
+    public void avlInoder(AvlNode node){
+        if(node==null)
+            return;
+        avlInoder(node.left);
+        System.out.print(node.data+" "+node.number+"\n");
+        avlInoder(node.right);
+    }
+    
+    AvlNode getAvlRoot(){
+        return avlRoot;
     }
 }
 
