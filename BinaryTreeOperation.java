@@ -19,7 +19,8 @@ public class BinaryTreeOperation {
         do{
             System.out.print("\n1)Add node\n2)BFS/Level order traversal\n"
                     + "3)DFS(Depth First Traversals)\n4)Delete node\n"
-                    + "5)Array implementation\n6)Exit\n");
+                    + "5)Array implementation\n6)AVL with duplicate keys\n"
+                    + "7)Avl Display\n8)Exit\n");
             System.out.print("Enter your choice:-");
             try{
                 choice = sc.nextInt();
@@ -89,9 +90,22 @@ public class BinaryTreeOperation {
                        }
                        bt.displayArray();
                        break;
-                            
+                       
+                case 6:
+                       System.out.print("\nNumber of nodes:-");
+                       num=sc.nextInt();
+                       for(int i=0;i<num;i++){
+                           System.out.print("\nValue:-");
+                           value = sc.nextInt();
+                           bt.treeDuplicateValue(value);
+                       }
+                       break;
+                case 7:
+                       System.out.print("\nAvl Tree with duplicate value:-");
+                       AvlNode root = bt.getAvlRoot();
+                       bt.avlInoder(root);
             }
-        }while(choice!=6);
+        }while(choice!=8);
     }
    
     public static void main(String[] args) {
